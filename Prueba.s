@@ -43,21 +43,24 @@ finish:
     syscall
     j end
 
-
-mainLoop:
-    lb      $t0,0($s0)          
-    addiu   $s0,$s0,1               
-    beqz    $t0,finish      
-
-    la      $s1,v                 
-
 countVLoop:
     lb      $t1,0($s1)             
     beqz    $t1,mainLoop        
     addiu   $s1,$s1,1             
     bne     $t0,$t1,countVLoop   
     addi    $s2,$s2,1               
-    j       mainLoop            
+    j       mainLoop     
+
+
+mainLoop:
+    lb      $t0,0($s0)          
+    addiu   $s0,$s0,1               
+    beqz    $t0,finish      
+
+    la      $s1,v
+    j countVLoop                 
+
+       
 
 
 end:
