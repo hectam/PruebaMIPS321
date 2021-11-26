@@ -19,25 +19,10 @@ main:
     syscall
 
     li      $s2,0                   
-    la      $s0,str                 
+    la      $s0,str     
+    j mainLoop            
 
-
-string_loop:
-    lb      $t0,0($s0)          
-    addiu   $s0,$s0,1               
-    beqz    $t0,string_done        
-
-    la      $s1,v                 
-
-vowel_loop:
-    lb      $t1,0($s1)             
-    beqz    $t1,string_loop        
-    addiu   $s1,$s1,1             
-    bne     $t0,$t1,vowel_loop   
-    addi    $s2,$s2,1               
-    j       string_loop            
-
-string_done:
+finish:
 
     li      $v0,4
     la      $a0,Result
@@ -56,3 +41,23 @@ string_done:
  
     li      $v0,10
     syscall
+    j end
+
+
+mainLoop:
+    lb      $t0,0($s0)          
+    addiu   $s0,$s0,1               
+    beqz    $t0,finish      
+
+    la      $s1,v                 
+
+countVLoop:
+    lb      $t1,0($s1)             
+    beqz    $t1,mainLoop        
+    addiu   $s1,$s1,1             
+    bne     $t0,$t1,countVLoop   
+    addi    $s2,$s2,1               
+    j       mainLoop            
+
+
+end:
